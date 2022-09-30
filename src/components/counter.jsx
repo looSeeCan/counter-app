@@ -16,34 +16,7 @@ class Counter extends Component {
     //     fontWeight: "bold"
     // };
     
-    // constructor() {
-    //     super();
-    //     // console.log(this.handleIncrement.bind(this));
-    //     this.handleIncrement = this.handleIncrement.bind(this);
-    // }
-
-    // handleIncrement() {/// binding event handlers
-    //     console.log("Increment clicked:", this);/// this is undefined here, if you do not have the constructor.
-    //     console.log(this.state.count)
-    // }
-
-    handleIncrement = () => { ///instead of doing the whole binding thing. use => functions. they dont rebind the this keyword, they inherit it
-        console.log("Increment clicked:", this);/// this is undefined here, if you do not have the constructor.
-    }
     
-    renderTags() { /// conditional rendering
-        /// (this.state.tags.length === 0) ? <p>There are no tags!</p> : <ul>{this.state.tags.map(tag => <li key={tag}>{tag}</li>)}</ul>
-        /// rendering list of items in react. whenever we rendeer a map method, we need to set a key attribute and set the value to a dynamic value {}. the value needs to be unique.
-        if(this.state.tags.length === 0)  return <p>There are no tags!</p>
-        else return <ul>{this.state.tags.map(tag => <li key={tag}>{tag}</li>)}</ul>
-    };
-
-    getBadgeClasses() {/// refactored. ctrl+shift+r. extract to method in class counter
-        let classes = "badge m-2 badge-"; /// Rendering classes dynamically. the value here is a bootstrap value. the m-2 means margin 2 */
-        classes += this.state.count === 0 ? "warning" : "primary"; /// reasigning classes. if the value of count is 0 then the word warning is added to the classes variable
-        return classes;
-    }
-
     formatCount() {
         const {count} = this.state /// used object destructuring to improve the commented out return statement
         // console.log(count);
@@ -51,7 +24,40 @@ class Counter extends Component {
         // return this.state.count === 0 ? "Zero": this.state.count;
     }
 
+    // constructor() {
+        //     super();
+        //     // console.log(this.handleIncrement.bind(this));
+        //     this.handleIncrement = this.handleIncrement.bind(this);
+        // }
 
+    // handleIncrement() {/// binding event handlers
+    //     console.log("Increment clicked:", this);/// this is undefined here, if you do not have the constructor.
+    //     console.log(this.state.count)
+    // }
+
+    handleIncrement = product => { ///instead of doing the whole binding thing. use => functions. they dont rebind the this keyword, they inherit it
+        console.log("Increment clicked:", this);/// this is undefined here, if you do not have the constructor.
+        console.log(product);
+        /// Updating the state
+        // this.state.count ++ /// we do not modify the state directily. we will not see the changes. it does increment, but react is not aware of that and that is why
+        //it is not updating the view. We need to use the setState method that is inherited to tell react explicitly what has changed
+
+        this.setState({count: this.state.count +1}) /// we pass an object as an argument to the setState method. we can add a new key and value or update an existing key value
+    }
+    
+    getBadgeClasses() {/// refactored. ctrl+shift+r. extract to method in class counter
+    let classes = "badge m-2 badge-"; /// Rendering classes dynamically. the value here is a bootstrap value. the m-2 means margin 2 */
+    classes += this.state.count === 0 ? "warning" : "primary"; /// reasigning classes. if the value of count is 0 then the word warning is added to the classes variable
+    // (this.state.count === 0) ? classes += "warning": classes += "primary" ///same as ^
+        return classes;
+    }
+
+    renderTags() { /// conditional rendering
+        /// (this.state.tags.length === 0) ? <p>There are no tags!</p> : <ul>{this.state.tags.map(tag => <li key={tag}>{tag}</li>)}</ul>
+        /// rendering list of items in react. whenever we rendeer a map method, we need to set a key attribute and set the value to a dynamic value {}. the value needs to be unique.
+        if(this.state.tags.length === 0)  return <p>There are no tags!</p>
+        else return <ul>{this.state.tags.map(tag => <li key={tag}>{tag}</li>)}</ul>
+    };
     
     render() {
         let classes = this.getBadgeClasses(); /// refactored
@@ -60,7 +66,9 @@ class Counter extends Component {
             <React.Fragment> {/*inside here we can add any valid JavaScript expression or here I am using it for a comment*/}
                 {/* <img src={this.state.imageUrl} /> */}
                 <span className={classes}>{this.formatCount()}</span> {}
-                <button onClick = {this.handleIncrement} className='btn btn-secondary btn-sm'>Increment</button> {/*style ={{fontSize: 30}} = inline */}
+                
+                {/*passing event arguments */}
+                <button onClick = {() => this.handleIncrement({id: 1})} className='btn btn-secondary btn-sm'>Increment</button> {/*style ={{fontSize: 30}} = inline */}
                 
                 {this.state.tags.length === 0  && "Please create a new tag!"}{/*truthy falsy. if the first statement is true
                     the && operator  asks if the next is true. in this case it is, because a string is true. prints the string to the screen */}
