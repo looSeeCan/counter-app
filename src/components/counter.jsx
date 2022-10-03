@@ -63,6 +63,9 @@ class Counter extends Component {
     };
     
     render() {
+        /// launch.json /// spent a whole day trying to set up debugger for react. check git commit. only commenting here, because this is where i 
+        /// set my breakpoint and git does not recognize the changes in the luanch.json file.
+        
         console.log("this.props:", this.props) /// checking props. these props are being passed in from the render() method in counters.jsx
         let classes = this.getBadgeClasses(); /// refactored
         
