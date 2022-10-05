@@ -4,12 +4,19 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import Counters from "./components/counters";
+import Counters1 from './components/counters1';
 import "bootstrap/dist/css/bootstrap.css"; /// installed this in the begining of the course. 2-Setting Up the Project
+
+
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <Counters />
+    <br />
+    <br />
+    <br />
+    <Counters1 />
   </React.StrictMode>
 );
 
